@@ -55,6 +55,7 @@ from collections.abc import Sequence
 
 from sys import modules
 from importlib import import_module
+from inspect import signature as py_inspect_signature
 
 try:
     import pyshaders_extensions
@@ -213,7 +214,7 @@ def create_uniform_getter(loc, type, count, is_array):
         
     return getter_fn
     
-def create_uniform_setter(loc, type, count, is_array):
+def create_uniform_setter(loc, type, count, is_array, accessor):
     """
         Generate a function that set an uniform.
     """
@@ -226,9 +227,21 @@ def create_uniform_setter(loc, type, count, is_array):
     
     if not is_array and not is_matrix:
         def setter_fn(value):
-            data = c_buf_type(*to_seq(value))
-            data_ptr = cast(data, POINTER(c_type))
-            setter(loc, count, data_ptr)
+            def get_data_ptr(value):
+                data = c_buf_type(*to_seq(value))
+                return cast(data, POINTER(c_type))
+            setter_sig = py_inspect_signature(setter)
+            if len(setter_sig.parameters) == 3:
+                setter(loc, count, get_data_ptr(value))
+            else:
+                sig_params = setter_sig.parameters.keys()
+                kwargs = { }
+                if "value" in sig_params or "kwargs" in sig_params:
+                    kwargs["value"] = value
+                if "accessor" in sig_params or "kwargs" in sig_params:
+                    kwargs["accessor"] = accessor
+                # extended setter call
+                setter(loc, count, get_data_ptr, **kwargs)
             
     elif is_array ^ is_matrix:
         unpack = False if type in UNPACK_ARRAY else True
@@ -573,7 +586,7 @@ class ShaderUniformAccessor(ShaderAccessor):
             name = name.replace('[0]', '')
             is_array = True
             
-        set = create_uniform_setter(loc, type, size, is_array)
+        set = create_uniform_setter(loc, type, size, is_array, self)
         get = create_uniform_getter(loc, type, size, is_array)
         
         uinfo = self.uinfo(loc=loc, type=type, name=name, size=size,
