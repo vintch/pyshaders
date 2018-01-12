@@ -230,18 +230,24 @@ def create_uniform_setter(loc, type, count, is_array, accessor):
             def get_data_ptr(value):
                 data = c_buf_type(*to_seq(value))
                 return cast(data, POINTER(c_type))
-            setter_sig = py_inspect_signature(setter)
-            if len(setter_sig.parameters) == 3:
+            #
+            try:
+                setter_sig = py_inspect_signature(setter)
+            except ValueError:
+                setter_sig = None
+            #
+            if setter_sig is not None:
+                sig_params = setter_sig.parameters.keys()
+            if setter_sig is None or "get_data_ptr_func" not in sig_params:
                 setter(loc, count, get_data_ptr(value))
             else:
-                sig_params = setter_sig.parameters.keys()
                 kwargs = { }
                 if "value" in sig_params or "kwargs" in sig_params:
                     kwargs["value"] = value
                 if "accessor" in sig_params or "kwargs" in sig_params:
                     kwargs["accessor"] = accessor
                 # extended setter call
-                setter(loc, count, get_data_ptr, **kwargs)
+                setter(loc, count, get_data_ptr_func=get_data_ptr, **kwargs)
             
     elif is_array ^ is_matrix:
         unpack = False if type in UNPACK_ARRAY else True
