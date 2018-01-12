@@ -16,7 +16,7 @@ uniform ivec4 test_ivec4 = ivec4(7, 8, 9, 10);
 // Simple array
 uniform float[4] test_array_float = float[4](11.0, 12.0, 13.0, 14.0);
 uniform vec3[2] test_array_vec3 = vec3[2](vec3(9.0, 10.0, 12.0), vec3(8.0, 20.0, 15.0));
-uniform float[1] test_array_float2 = float[1](5.0);
+uniform float[2] test_array_float2 = float[2](5.0, 5.0);
 
 // Matrix
 uniform mat2 test_mat2 = mat2(1); 
