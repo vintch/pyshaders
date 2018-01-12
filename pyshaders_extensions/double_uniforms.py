@@ -34,13 +34,16 @@ from pyglet.gl import (GL_DOUBLE, GL_DOUBLE_VEC2, GL_DOUBLE_VEC3, GL_DOUBLE_VEC4
   GL_DOUBLE_MAT4x2, GL_DOUBLE_MAT4x3)
 
 from pyglet.gl import glGetString, GL_SHADING_LANGUAGE_VERSION, gl_info
+
+import re
+
 def check_requirements(target_gl, target_glsl):
     client_glsl = bytearray()
     for i in glGetString(GL_SHADING_LANGUAGE_VERSION):
         if i != 0: client_glsl.append(i)
         else: break
-    
-    client_glsl = [ int(v) for v in client_glsl.decode('utf8').split('.') ]
+
+    client_glsl = [int(v) for v in re.match(r"(\d+)\.(\d+)", client_glsl.decode('utf8')).groups()]
     
     gl_ok = gl_info.have_version(*target_gl)
     glsl_ok = ((client_glsl[0] > target_glsl[0]) or 

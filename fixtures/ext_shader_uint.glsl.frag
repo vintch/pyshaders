@@ -2,7 +2,7 @@
 
 out vec4 color_frag;
 
-uniform uint test_uint = 0; 
+uniform uint test_uint = 0u;
 uniform uvec2 test_uvec2 = uvec2(0, 0); 
 uniform uvec3 test_uvec3 = uvec3(0, 0, 0); 
 uniform uvec4 test_uvec4 = uvec4(0, 0, 0, 0); 

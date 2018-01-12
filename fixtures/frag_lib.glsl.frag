@@ -1,4 +1,4 @@
-#version 330 core
+#version 130 core
 
 vec4 secret_method()
 {
