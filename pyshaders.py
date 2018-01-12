@@ -167,7 +167,7 @@ def create_uniform_getter(loc, type, count, is_array):
         Create a function that gets uniform values
     """
     if not type in UNIFORMS_DATA.keys():
-        return lambda x: None
+        raise UnknownUniformTypeError(type)
         
     c_type, bcount, setter, *mat_size = UNIFORMS_DATA[type]
     c_buf_type = c_type*bcount
@@ -218,7 +218,7 @@ def create_uniform_setter(loc, type, count, is_array):
         Generate a function that set an uniform.
     """
     if not type in UNIFORMS_DATA.keys():
-        return lambda x: None
+        raise UnknownUniformTypeError(type)
     
     c_type, bcount, setter, *mat_size = UNIFORMS_DATA[type]
     c_buf_type = c_type*(bcount*count)
@@ -261,6 +261,11 @@ class ShaderCompilationError(Exception):
 
 class PyShadersExtensionError(Exception):
     __slots__ = []
+
+class UnknownUniformTypeError(Exception):
+    def __init__(self, type = None):
+        super().__init__(self, "Error creating getter/setter: uniform has unknown type")
+        self.type = type
 
 class GLGetObject(object):
     """
