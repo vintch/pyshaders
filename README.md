@@ -1,5 +1,8 @@
 PyShaders
 ===================
+**Fork reason:** implementation of sampler2D/sampler2DRect uniforms support. Done via custom extension + minor main library changes. Unit tests updated accordingly.
+
+_Fork version: **1.4.1**.1_
 
 
 Pyshaders aims to completely wraps the opengl2.1 shader api in a python module. Pyshaders provides a pythonic OOP api that hides the lower level (ctypes) calls. Pyshaders provides a high level api and a low level api, and it can be integrated easily with existing code because it does not occlude the underlying opengl values.
