@@ -426,13 +426,15 @@ class ShaderAccessor(object):
             prog: Weakref to the uniforms shader program
             cache: Data about the attributes
             cache_type: Type of data in cache
+            __extensions_storage__: Storage for extensions (dict)
     """
     
-    __slots__ = ['prog', 'cache_type', 'cache']
+    __slots__ = ['prog', 'cache_type', 'cache', '__extensions_storage__']
     
     def __init__(self, program):
         self.prog = weakref.ref(program)   
         self.cache = {}
+        self.__extensions_storage__ = {}
         
     def reload(self, maxlength, count, fn, locfn):
         """
@@ -615,6 +617,8 @@ class ShaderUniformAccessor(ShaderAccessor):
             if prog is None:
                 raise RuntimeError('Shader was freed')
             return self.cache.get(name).get(prog.pid)
+        elif name in ShaderAccessor.__slots__:
+            return ShaderAccessor.__getattr__(self, name)
                 
         raise AttributeError('No uniform named "{}" found'.format(name))
         
