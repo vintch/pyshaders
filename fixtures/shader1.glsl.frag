@@ -1,4 +1,5 @@
 #version 130
+#extension GL_ARB_texture_rectangle : enable
 
 out vec4 color_frag;
 
@@ -35,6 +36,9 @@ uniform mat4x3 test_mat4x3 = mat4x3(1,1,1, 1,1,1, 1,1,1, 1,1,1);
 // Array of matrices
 uniform mat2[3] test_array_mat2 = mat2[](mat2(1), mat2(1), mat2(1));
 
+// Texture samplers
+uniform sampler2D test_tex;
+uniform sampler2DRect test_tex_rect;
 
 void main()
 {
@@ -43,5 +47,6 @@ void main()
   vec2 d = vec2(test_mat2x3[0][0]+test_mat3x2[0][0], test_mat2x4[0][0]+test_mat3x4[0][0]);
   vec2 e = vec2(test_mat4x2[0][0], test_mat4x3[0][0]+test_array_float2[0]+test_array_mat2[2][0][0]);
   vec4 c = vec4(test_vec4[0]+e[0]+e[1], a[0]+d[1]+d[0], b[0]+test_array_vec3[1][2], test_array_float[3]);
+  c += (texture2D(test_tex, a) + texture2DRect(test_tex_rect, a)) * 0.001;
   color_frag = c;
 }

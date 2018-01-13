@@ -17,6 +17,9 @@ from pyshaders import (ShaderObject, ShaderCompilationError, shader_source,
 
 vert_path = lambda fname: 'fixtures/{}.glsl.vert'.format(fname)
 frag_path = lambda fname: 'fixtures/{}.glsl.frag'.format(fname)
+tex_path = lambda fname: 'fixtures/{}.bmp'.format(fname)
+
+load_extension("sampler2D_uniforms")  # this extension is always supported
 
 def eof(f):
     pos = f.tell()
@@ -393,15 +396,15 @@ class TestUniforms(unittest.TestCase):
     def test_uniforms_data(self):
         " Check if uniforms data matches "
         shader = from_files_names(vert_path('shader1'), frag_path('shader1'))
-        self.assertEqual(23, len(shader.uniforms))
-        self.assertEqual(23, shader.uniforms_count)
+        self.assertEqual(25, len(shader.uniforms))
+        self.assertEqual(25, shader.uniforms_count)
         
         uniforms_names = ['model', 'view', 'test_float', 'test_vec2',
           'test_vec4', 'test_vec3', 'test_int', 'test_ivec2', 'test_ivec3',
           'test_ivec4', 'test_array_float', 'test_array_vec3', 'test_mat2',
           'test_mat3', 'test_mat4', 'test_mat2x3', 'test_mat2x4', 'test_mat3x2',
           'test_mat3x4', 'test_mat4x2', 'test_mat4x3', 'test_array_mat2',
-          'test_array_float2']        
+          'test_array_float2', 'test_tex', 'test_tex_rect']
         for name, info in shader.uniforms:
             self.assertIn(name, uniforms_names)
             uniforms_names.remove(name)
@@ -493,6 +496,25 @@ class TestUniforms(unittest.TestCase):
                            (7.0, 8.0, 9.0), (10.0, 11.0, 12.0))
         self.assertEqual(((1.0, 2.0, 3.0), ( 4.0,  5.0,  6.0),
                            (7.0, 8.0, 9.0), (10.0, 11.0, 12.0)), uni.test_mat4x3)
+
+        tex_16x16 = pyglet.image.load(tex_path("texture_16x16")).get_texture()
+        tex_31x16 = pyglet.image.load(tex_path("texture_31x16")).get_texture(rectangle=True)
+        #
+        uni.test_tex = tex_16x16
+        self.assertEqual(0, uni.test_tex)
+        uni.test_tex_rect = tex_31x16
+        self.assertEqual(1, uni.test_tex_rect)
+        #
+        uni.test_tex = tex_16x16  # check for texture units bindings preserving
+        self.assertEqual(0, uni.test_tex)
+        uni.test_tex_rect = tex_31x16
+        self.assertEqual(1, uni.test_tex_rect)
+        #
+        uni.test_tex = 2
+        self.assertEqual(2, uni.test_tex)
+        uni.test_tex_rect = 3
+        self.assertEqual(3, uni.test_tex_rect)
+
         
     def test_get_set_uniforms_array(self):
         " Get/Set array types "        
@@ -575,7 +597,18 @@ class TestUniforms(unittest.TestCase):
             
         with self.assertRaises(TypeError, msg='No error raised when setting uniforms with bad type'):
             uni.test_array_vec3 = (1,)
-            
+
+        with self.assertRaises(TypeError, msg='No error raised when setting uniforms with bad type'):
+            uni.test_tex = "error"
+
+        tex_16x16 = pyglet.image.load(tex_path("texture_16x16")).get_texture()
+        tex_31x16 = pyglet.image.load(tex_path("texture_31x16")).get_texture(rectangle=True)
+        #
+        with self.assertRaises(ValueError, msg='No error raised when setting texture uniforms with bad value'):
+            uni.test_tex = tex_31x16
+        with self.assertRaises(ValueError, msg='No error raised when setting texture uniforms with bad value'):
+            uni.test_tex_rect = tex_16x16
+
         # Overflow      
         with self.assertRaises(IndexError, msg='Overflow assign succeed'):
             uni.test_vec3 = (23.0, 64.0, 2.0, 83.0)
