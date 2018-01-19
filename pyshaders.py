@@ -23,28 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from pyglet.gl import (glCreateShader, glShaderSource, glCompileShader,
+from OpenGL.GLES2 import (glCreateShader, glShaderSource, glCompileShader,
   glGetShaderiv, glDeleteShader, glIsShader, glGetShaderInfoLog, glCreateProgram,
   glGetShaderSource, glAttachShader, glDetachShader, glDeleteProgram, glIsProgram,
   glGetAttachedShaders, glGetProgramiv, glLinkProgram, glGetProgramInfoLog,
   glUseProgram, glGetActiveUniform, GLenum, glGetUniformLocation, glUniform1fv,
   glGetUniformfv, glGetUniformiv, glUniform2fv, glUniform3fv, glUniform4fv,
   glUniform2iv, glUniform3iv, glUniform4iv, glUniform1iv, glGetIntegerv, GLuint,
-  glUniformMatrix2fv, glUniformMatrix3fv, glUniformMatrix4fv, glUniformMatrix2x3fv,
-  glUniformMatrix2x4fv, glUniformMatrix3x2fv, glUniformMatrix3x4fv, 
-  glUniformMatrix4x2fv, glUniformMatrix4x3fv, glGetActiveAttrib, 
+  glUniformMatrix2fv, glUniformMatrix3fv, glUniformMatrix4fv, glGetActiveAttrib,
   glGetAttribLocation, GLint, GLfloat, glEnableVertexAttribArray, 
   glDisableVertexAttribArray, glGetVertexAttribiv, glVertexAttribPointer)
 
-from pyglet.gl import (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_COMPILE_STATUS,
+from OpenGL.GLES2 import (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_COMPILE_STATUS,
   GL_TRUE, GL_SHADER_TYPE, GL_DELETE_STATUS, GL_INFO_LOG_LENGTH,
   GL_SHADER_SOURCE_LENGTH, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_ATTACHED_SHADERS,
   GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS,
   GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_FLOAT, GL_FLOAT_VEC2, GL_FLOAT_VEC3,
   GL_FLOAT_VEC4, GL_INT, GL_INT_VEC2, GL_INT_VEC3, GL_INT_VEC4,
-  GL_FLOAT_MAT2, GL_FLOAT_MAT3, GL_FLOAT_MAT4, GL_FLOAT_MAT2x3, GL_FLOAT_MAT2x4,
-  GL_FLOAT_MAT3x2, GL_FLOAT_MAT3x4, GL_FLOAT_MAT4x2, GL_FLOAT_MAT4x3,
-  GL_CURRENT_PROGRAM, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_SIZE,
+  GL_FLOAT_MAT2, GL_FLOAT_MAT3, GL_FLOAT_MAT4, GL_CURRENT_PROGRAM,
+  GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_SIZE,
   GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_STRIDE, 
   GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_TYPE)
 
@@ -132,13 +129,7 @@ UNIFORMS_DATA = {
   GL_FLOAT_MAT2: (GLfloat, 4, lambda x,y,z: glUniformMatrix2fv(x,y,TRANSPOSE_MATRIX,z),      (2,2)),
   GL_FLOAT_MAT3: (GLfloat, 9, lambda x,y,z: glUniformMatrix3fv(x,y,TRANSPOSE_MATRIX,z),      (3,3)),
   GL_FLOAT_MAT4: (GLfloat, 16, lambda x,y,z: glUniformMatrix4fv(x,y,TRANSPOSE_MATRIX,z),     (4,4)),
-  GL_FLOAT_MAT2x3: (GLfloat, 6, lambda x,y,z: glUniformMatrix2x3fv(x,y,TRANSPOSE_MATRIX,z),  (2,3)),
-  GL_FLOAT_MAT2x4: (GLfloat, 8, lambda x,y,z: glUniformMatrix2x4fv(x,y,TRANSPOSE_MATRIX,z),  (2,4)),
-  GL_FLOAT_MAT3x2: (GLfloat, 6, lambda x,y,z: glUniformMatrix3x2fv(x,y,TRANSPOSE_MATRIX,z),  (3,2)),
-  GL_FLOAT_MAT3x4: (GLfloat, 12, lambda x,y,z: glUniformMatrix3x4fv(x,y,TRANSPOSE_MATRIX,z), (3,4)),
-  GL_FLOAT_MAT4x2: (GLfloat, 8, lambda x,y,z: glUniformMatrix4x2fv(x,y,TRANSPOSE_MATRIX,z),  (4,2)),
-  GL_FLOAT_MAT4x3: (GLfloat, 12, lambda x,y,z: glUniformMatrix4x3fv(x,y,TRANSPOSE_MATRIX,z), (4,3)),
-} 
+}
 
 UNPACK_ARRAY = [GL_FLOAT, GL_INT]
 

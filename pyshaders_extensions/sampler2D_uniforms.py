@@ -1,5 +1,4 @@
-from pyglet.gl import glUniform1iv, glActiveTexture, glEnable, glBindTexture, GLint, GL_TEXTURE_2D, GL_TEXTURE0
-from pyglet.image import Texture
+from OpenGL.GLES2 import glUniform1iv, glActiveTexture, glEnable, glBindTexture, GLint, GL_TEXTURE_2D, GL_TEXTURE0
 
 
 # Taken from
@@ -15,7 +14,7 @@ def uniform_sampler2D_setter_impl(loc, count, get_data_ptr_func, value, accessor
     loc_str = str(loc)
     if type(value) is int:
         texture_unit = value
-    elif isinstance(value, Texture):
+    elif hasattr(value, "target") and hasattr(value, "id"):
         if (value.target != GL_TEXTURE_2D) ^ rectangle:
             raise ValueError("Texture expected to be {} rectangle".format("a" if rectangle else "not a"))
         if loc_str not in bindings:

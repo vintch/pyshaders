@@ -4,8 +4,7 @@ import unittest, gc
 from io import SEEK_END
 from ctypes import c_char_p, cast, sizeof
 
-import pyglet
-from pyglet.gl import (glIsShader, GL_FALSE, GL_VERTEX_SHADER, GL_FRAGMENT_SHADER,
+from OpenGL.GLES2 import (glIsShader, GL_FALSE, GL_VERTEX_SHADER, GL_FRAGMENT_SHADER,
   glCreateShader, GL_TRUE, glDeleteShader, glIsProgram, glCreateProgram,
   glDeleteProgram, GL_DOUBLE, GL_FLOAT, GL_INT)
 
