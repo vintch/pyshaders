@@ -1,6 +1,7 @@
 PyShaders
 ===================
 **Fork reason:** implementation of sampler2D/sampler2DRect uniforms support. Done via custom extension + minor main library changes. Unit tests updated accordingly.
+**Branch purpose:** porting current version from pyglet to the **OpenGL.GLES2** platform. Pillow is used for texture loading.
 
 _Fork version: **1.4.1**.1_
 
