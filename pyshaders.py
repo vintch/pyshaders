@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from OpenGL.GLES2 import (glCreateShader, glShaderSource, glCompileShader,
+from gles2_native import (glCreateShader, glShaderSource, glCompileShader,
   glGetShaderiv, glDeleteShader, glIsShader, glGetShaderInfoLog, glCreateProgram,
   glGetShaderSource, glAttachShader, glDetachShader, glDeleteProgram, glIsProgram,
   glGetAttachedShaders, glGetProgramiv, glLinkProgram, glGetProgramInfoLog,
@@ -34,7 +34,7 @@ from OpenGL.GLES2 import (glCreateShader, glShaderSource, glCompileShader,
   glGetAttribLocation, GLint, GLfloat, glEnableVertexAttribArray, 
   glDisableVertexAttribArray, glGetVertexAttribiv, glVertexAttribPointer)
 
-from OpenGL.GLES2 import (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_COMPILE_STATUS,
+from gles2_native import (GL_VERTEX_SHADER, GL_FRAGMENT_SHADER, GL_COMPILE_STATUS,
   GL_TRUE, GL_SHADER_TYPE, GL_DELETE_STATUS, GL_INFO_LOG_LENGTH,
   GL_SHADER_SOURCE_LENGTH, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_ATTACHED_SHADERS,
   GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS,

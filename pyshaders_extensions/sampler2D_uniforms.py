@@ -1,4 +1,4 @@
-from OpenGL.GLES2 import glUniform1iv, glActiveTexture, glEnable, glBindTexture, GLint, GL_TEXTURE_2D, GL_TEXTURE0
+from gles2_native import glUniform1iv, glActiveTexture, glEnable, glBindTexture, GLint, GL_TEXTURE_2D, GL_TEXTURE0
 
 
 # Taken from

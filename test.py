@@ -4,9 +4,9 @@ import unittest, gc
 from io import SEEK_END
 from ctypes import c_char_p, cast, sizeof
 
-from OpenGL.GLES2 import (glIsShader, GL_FALSE, GL_VERTEX_SHADER, GL_FRAGMENT_SHADER,
+from gles2_native import (glIsShader, GL_FALSE, GL_VERTEX_SHADER, GL_FRAGMENT_SHADER,
   glCreateShader, GL_TRUE, glDeleteShader, glIsProgram, glCreateProgram,
-  glDeleteProgram, GL_DOUBLE, GL_FLOAT, GL_INT)
+  glDeleteProgram, GL_FLOAT, GL_INT)
 
 import pyshaders
 from pyshaders import (ShaderObject, ShaderCompilationError, shader_source,
@@ -379,11 +379,11 @@ class TestAccessors(unittest.TestCase):
         
         self.assertEqual(GL_TRUE, attr.vert.enabled)
         
-        attr.vert.point_to(200, GL_DOUBLE, 3, True, 4)
-        self.assertEqual(4, attr.vert.stride)
-        self.assertEqual(GL_TRUE, attr.vert.normalized)
-        self.assertEqual(3, attr.vert.size)
-        self.assertEqual(GL_DOUBLE, attr.vert.ptr_type)
+        #attr.vert.point_to(200, GL_DOUBLE, 3, True, 4)
+        #self.assertEqual(4, attr.vert.stride)
+        #self.assertEqual(GL_TRUE, attr.vert.normalized)
+        #self.assertEqual(3, attr.vert.size)
+        #self.assertEqual(GL_DOUBLE, attr.vert.ptr_type)
         
         attr.vert.disable()
         
