@@ -28,4 +28,5 @@ setup(name='pyshaders',
       url='https://github.com/gabdube/pyshaders',
       download_url='https://github.com/gabdube/pyshaders',
       py_modules=['pyshaders']+extensions,
+      install_requires=['rpi_gles2_native']
      )

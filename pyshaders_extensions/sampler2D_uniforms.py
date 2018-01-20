@@ -1,10 +1,5 @@
-from gles2_native import glUniform1iv, glActiveTexture, glEnable, glBindTexture, GLint, GL_TEXTURE_2D, GL_TEXTURE0
-
-
-# Taken from
-# https://github.com/google/swiftshader/blob/master/include/GL/glcorearb.h
-GL_SAMPLER_2D      = 0x8B5E
-GL_SAMPLER_2D_RECT = 0x8B63
+from rpi_gles2_native import glUniform1iv, glActiveTexture, glEnable, glBindTexture, \
+    GLint, GL_TEXTURE_2D, GL_TEXTURE0, GL_SAMPLER_2D, GL_SAMPLER_2D_RECT
 
 
 def uniform_sampler2D_setter_impl(loc, count, get_data_ptr_func, value, accessor, rectangle):
