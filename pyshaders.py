@@ -106,7 +106,7 @@ def shader_source(data):
 # Uniform getter/setter
 #    
 
-TRANSPOSE_MATRIX = True
+TRANSPOSE_MATRIX = False
 def transpose_matrices(val):
     global TRANSPOSE_MATRIX
     TRANSPOSE_MATRIX = bool(val)
