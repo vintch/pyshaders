@@ -760,6 +760,9 @@ class ShaderProgram(object):
         
     def __repr__(self):
         return "ShaderProgram {}".format(self.pid)
+
+    def __hash__(self):
+        return self.pid
         
     def __del__(self):
         if self.owned and self.valid():
